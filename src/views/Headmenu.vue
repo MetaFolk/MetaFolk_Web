@@ -1,13 +1,36 @@
 <script setup>
   import {ref} from 'vue'
   import {  Search} from '@element-plus/icons-vue'
+  import axios from 'axios';
   let headlist=ref([
     {title:'首页',path:'/index'},
     {title:'音乐地图',path:'/music_house'},
     {title:'音乐库',path:'/database'},
     {title:'关于我们',path:'/overview'},
   ])
-  
+  const musicList=ref([])
+  const form = {
+  songid: ref(''),
+  songname: ref(''),
+  songintroduction: ref(''),
+  songclass: ref(''),
+  singer: ref(''),
+  songtime: ref(''),
+  songsearch:ref(''),
+};
+async function searchsong() {
+  try {
+    const response = await axios.get(`/api/search/tag?tag=${encodeURIComponent(form.songsearch.value)}`);
+    
+    if (response.status === 200) {
+      musicList.value = response.data.music_list;
+    } else {
+      console.error('Error fetching songs: ', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error fetching songs:', error);
+  }
+}
   </script>
 
 
@@ -35,12 +58,19 @@
             <!-- 三部分 -->
             <div class="header-right">
               <div class="search-box">
-               <input type="text" placeholder="搜索">
-               <el-button type="primary" :icon="Search">Search</el-button>
+               <input type="text" placeholder="搜索关键词、歌曲名称" v-model="form.songsearch.value">
+               <el-button type="primary" :icon="Search" @click="searchsong()">Search</el-button>
+               <div id="song-list">
+                <div class="song-item" v-for="song in musicList" :key="song.music_id">
+                  <span class="music-id">{{ song.music_id }}</span>
+                  <span class="music-name">{{ song.music_name }}</span>
+                  <span class="singer-name">{{ song.singer_name }}</span>
+                </div>
               </div>
             
             </div>
           
+          </div>
           </div>
     </div>
     </div>
@@ -62,6 +92,9 @@
     height:70px;
     background-color: #fff;
     box-shadow:0 5px 5px rgba(0,0,0);
+    background-image: url("@/assets/img/back.jpg");
+    background-size: cover; /* 背景图片自适应容器大小 */
+    background-position: center; /* 图片居中 */
 }
 .header-top{
     width:1280px;

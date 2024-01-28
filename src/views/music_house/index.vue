@@ -1,9 +1,6 @@
 <template>
-    <div>
-     <div
-      ref="chinaMap"
-      style="height: 1000px;border: solid 1px red;width: 100%;background: #fdfdfd;"
-       >
+    <div class="map">
+     <div ref="chinaMap" style="height: 1000px;border: solid 1px red;width: 100%;background: #fdfdfd;">
       地图1
      </div>
     </div>
@@ -40,8 +37,9 @@
       opacity: 1,
      },
       // 陕西省特有的民歌信息
-      song: '信天游：兰花花花花花花',
+      song: '       陕北民歌，主要流传在陕西省北部黄土高原上的的传统音乐，国家级非物质文化遗产之一。陕北民歌历史形成时间较早，如民歌信天游可追溯到先秦时期，至汉代成形。 陕北民歌主要包括信天游、山曲、爬山调、船工号子、大秧歌调、旱船曲、酒曲、二人台、榆林小曲、清涧道情、传统小调及众多风俗歌曲等共两万七千余首。 其代表性曲目有《东方红》《兰花花》《三十里铺》《赶牲灵》等。2008年6月，陕西省榆林市、延安市申报的陕北民歌经国务院批准列入第二批国家级非物质文化遗产名录 '
      // 陕西省特有的音乐链接
+    
      //audio: require('@/assets/music/lanhua.mp4'), 
     },
     {
@@ -127,6 +125,7 @@
            // console.log('Province Name:', params.name);
             const regionData = regions.find(region => region.name === params.name);
           //  console.log('Region Data:', regionData);
+          
              return `民歌: ${regionData ? regionData.song : '未知'}`;
           },
         }
@@ -140,7 +139,9 @@
     console.log('2.regionData',regionData)
     if (regionData && regionData.name === '陕西省') {
       // 显示文本框
-      console.log('3.regionData',regionData.song)
+      //console.log('params.event',params.event)
+      //console.log('3.regionData',regionData.song);
+     
       showTextBox(regionData)
     }
   })
@@ -159,22 +160,28 @@
     // 例如，可以使用 HTML5 Audio API 播放音乐
     // const audio = new Audio(regionData.audio)
     // audio.play()
+    if (regionData) {
+      playSong(regionData.song)
+    }
   })
 }
 
 function showTextBox(regionData) {
   console.log('Show text box:', regionData.name);
+  //console.log(event)
   const textBox = document.createElement('div');
   textBox.className = 'text-box';
-  textBox.innerHTML = regionData.song;
+  textBox.innerHTML = '<p>陕北民歌，主要流传在陕西省北部黄土高原上的的传统音乐，国家级非物质文化遗产之一。陕北民歌历史形成时间较早，如民歌信天游可追溯到先秦时期，至汉代成形。</p><p>${regionData.song}</p>';
   textBox.style.position = 'absolute';
-  textBox.style.top = '550px'; // 调整为适当的位置
-  textBox.style.left = '50%'; // 调整为适当的位置
-  textBox.style.transform = 'translateX(-50%)'; // 居中显示
+  //console.log('xposition',event.mouseX)
+  //console.log('yposition',event.mouseY)
+  //textBox.style.top = `${event.offetsetY - 20}px`
+  textBox.style.top = '350px'; // 调整为适当的位置
+  textBox.style.left = '900px'; // 调整为适当的位置
+  //textBox.style.transform = 'translateX(-50%)'; // 居中显示
+
+  //textBox.style.left = `${event.offetsetX + 20}px`
   textBox.style.zIndex = '99999999'; // 设置较高的层级
-
-    document.body.appendChild(textBox);
-
   document.body.appendChild(textBox);
 
   // 添加点击事件，点击播放音乐
@@ -196,9 +203,29 @@ function hideTextBox() {
     document.body.removeChild(textBox);
   }
 }
+function playSong(song) {
+  // Add logic to play the song
+  console.log(`Playing song: ${song}`)
+}
+
    </script>
    <style>
+   .map{
+    position:relative;
+   }
    .text-box {
-  background-color: #89fa83; /* 设置背景颜色 */
+  background-color:rgb(25, 25, 25,0.7); /* 设置背景颜色 */
+  width:300px;
+  display: inline-block;
+  border-radius: 8px;
+  line-height: 20px;
+  padding-left: 10px;
+  border:1px solid rgb(249, 246, 246);
+  font-size: 12px;
+  padding: 24px;
+  font-family: 'Microsoft Yahei';
+  font-size: 16px;
+  color: white;
+  white-space: pre-wrap;
     }
   </style>

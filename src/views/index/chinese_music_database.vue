@@ -2,6 +2,7 @@
 import {ref} from 'vue'
 import { Right, ElementPlus } from '@element-plus/icons-vue'
  import chinese_folk from '@/assets/img/chinese_folk.gif' 
+ import router from '@/router/index.js'
 /* import { requiredNumber } from 'element-plus/es/components/table-v2/src/common'; */
 export default{
   data(){
@@ -44,7 +45,7 @@ export default{
                     </el-text>
                 </el-row>
                 <el-text style="color:#f0c70f;">
-                     <el-button style="color:#d6e01c;">
+                     <el-button style="color:#d6e01c;" @click="$router.push('/database')">
                         查看全部
                      </el-button>
                      <el-icon>

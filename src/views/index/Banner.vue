@@ -1,9 +1,9 @@
 <script setup>  
 import {ref} from 'vue'
 let backImg = ref([
-  {img:new URL('../../assets/img/banner1.jpg', import.meta.url).href,id:1},
-  {img: new URL('../../assets/img/banner2.jpg',import.meta.url).href,id:2},
-  {img: new URL('../../assets/img/banner3.jpg',import.meta.url).href,id:3},
+  {img:new URL('../../assets/img/1.jpg', import.meta.url).href,id:1},
+  {img: new URL('../../assets/img/2.jpg',import.meta.url).href,id:2},
+  {img: new URL('../../assets/img/3.jpg',import.meta.url).href,id:3},
 ]
 )
 
@@ -12,9 +12,9 @@ let backImg = ref([
   <template>
     <div class="banner">
         <div class="banner-list">   
-          <el-carousel height="600px">
-            <el-carousel-item v-for="(item,index) in backImg" :key="index" style="height:600px">
-              <img :src="item.img" alt="" />
+          <el-carousel height="800px">
+            <el-carousel-item v-for="(item,index) in backImg" :key="index" style="height:700px">
+              <img :src="item.img" alt="" style="height: 100%;width: 100%"/>
             </el-carousel-item>
           </el-carousel>
         </div>
